@@ -1,6 +1,7 @@
 import { Elysia } from "elysia";
 import { BaseHtml } from "../components/base";
 import { Header } from "../components/header";
+import { Loader } from "../components/loader";
 import db from "../db/db";
 import { Filename, Jobs } from "../db/types";
 import { ALLOW_UNAUTHENTICATED, WEBROOT } from "../helpers/env";
@@ -20,112 +21,109 @@ function ResultsArticle({
 }) {
   return (
     <article class="article">
-      <div class="mb-4 flex items-center justify-between">
-        <h1 class="text-xl">Results</h1>
-        <div class="flex flex-row gap-4">
+      <div
+        class="
+          mb-6 flex flex-col gap-4
+          sm:flex-row sm:items-center sm:justify-between
+        "
+      >
+        <h1 class="text-2xl font-bold text-neutral-100">Results</h1>
+        <div class="flex flex-row gap-2">
           <form action={`${WEBROOT}/delete/${job.id}`} method="POST">
             <button
               type="submit"
               style={files.length !== job.num_files ? "pointer-events: none;" : ""}
-              class="flex btn-secondary flex-row gap-2 text-contrast"
+              class="flex btn-secondary flex-row items-center gap-2"
               {...(files.length !== job.num_files ? { disabled: true, "aria-busy": "true" } : "")}
             >
-              <DeleteIcon /> <p>Delete</p>
+              <DeleteIcon /> <span>Delete</span>
             </button>
           </form>
           <a
             style={files.length !== job.num_files ? "pointer-events: none;" : ""}
             href={`${WEBROOT}/archive/${job.id}`}
             download={`converted_files_${job.id}.tar`}
-            class="flex btn-primary flex-row gap-2 text-contrast"
+            class="flex btn-primary flex-row items-center gap-2"
             {...(files.length !== job.num_files ? { disabled: true, "aria-busy": "true" } : "")}
           >
-            <DownloadIcon /> <p>Tar</p>
+            <DownloadIcon /> <span>Tar</span>
           </a>
-          <button class="flex btn-primary flex-row gap-2 text-contrast" onclick="downloadAll()">
-            <DownloadIcon /> <p>All</p>
+          <button class="flex btn-primary flex-row items-center gap-2" onclick="downloadAll()">
+            <DownloadIcon /> <span>All</span>
           </button>
         </div>
       </div>
+      {files.length !== job.num_files && (
+        <div class="mb-6 flex flex-col items-center gap-3">
+          <Loader size={56} />
+          <p class="text-sm text-neutral-400">Converting your files...</p>
+        </div>
+      )}
       <progress
         max={job.num_files}
         {...(files.length === job.num_files ? { value: files.length } : "")}
         class={`
-          mb-4 inline-block h-2 w-full appearance-none overflow-hidden rounded-full border-0
-          bg-neutral-700 bg-none text-accent-500 accent-accent-500
+          mb-6 inline-block h-2 w-full appearance-none overflow-hidden rounded-full border-0
+          bg-(--surface-overlay) bg-none text-accent-500 accent-accent-500
           [&::-moz-progress-bar]:bg-accent-500
           [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:[background:none]
           [&[value]::-webkit-progress-value]:bg-accent-500
           [&[value]::-webkit-progress-value]:transition-[inline-size]
         `}
       />
-      <table
-        class={`
-          w-full table-auto rounded-sm bg-neutral-900 text-left
-          [&_td]:p-4
-          [&_tr]:rounded-sm [&_tr]:border-b [&_tr]:border-neutral-800
-        `}
-      >
-        <thead>
-          <tr>
-            <th
-              class={`
-                p-2
-                sm:px-4
-              `}
-            >
-              Converted File Name
-            </th>
-            <th
-              class={`
-                p-2
-                sm:px-4
-              `}
-            >
-              Status
-            </th>
-            <th
-              class={`
-                p-2
-                sm:px-4
-              `}
-            >
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {files.map((file) => (
+      <div class="overflow-x-auto rounded-lg border border-(--border-subtle)">
+        <table
+          class="
+            w-full table-auto text-left
+            [&_td]:p-3
+            [&_td]:first:max-w-[20vw] [&_td]:first:truncate
+            [&_th]:border-b [&_th]:border-(--border-default) [&_th]:p-3 [&_th]:text-sm
+            [&_th]:font-semibold [&_th]:tracking-wide [&_th]:text-neutral-400 [&_th]:uppercase
+            [&_tr]:border-b [&_tr]:border-(--border-subtle)
+          "
+        >
+          <thead>
             <tr>
-              <td safe class="max-w-[20vw] truncate">
-                {file.output_file_name}
-              </td>
-              <td safe>{file.status}</td>
-              <td class="flex flex-row gap-4">
-                <a
-                  class={`
-                    text-accent-500 underline
-                    hover:text-accent-400
-                  `}
-                  href={`${WEBROOT}/download/${outputPath}${file.output_file_name}`}
-                >
-                  <EyeIcon />
-                </a>
-                <a
-                  class={`
-                    text-accent-500 underline
-                    hover:text-accent-400
-                  `}
-                  href={`${WEBROOT}/download/${outputPath}${file.output_file_name}`}
-                  download={file.output_file_name}
-                >
-                  <DownloadIcon />
-                </a>
-              </td>
+              <th>Converted File Name</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {files.map((file) => (
+              <tr>
+                <td safe class="max-w-[20vw] truncate">
+                  {file.output_file_name}
+                </td>
+                <td safe>
+                  <span class="badge">{file.status}</span>
+                </td>
+                <td class="flex flex-row gap-3">
+                  <a
+                    class="
+                      text-accent-500 transition-colors
+                      hover:text-accent-400
+                    "
+                    href={`${WEBROOT}/download/${outputPath}${file.output_file_name}`}
+                  >
+                    <EyeIcon />
+                  </a>
+                  <a
+                    class="
+                      text-accent-500 transition-colors
+                      hover:text-accent-400
+                    "
+                    href={`${WEBROOT}/download/${outputPath}${file.output_file_name}`}
+                    download={file.output_file_name}
+                  >
+                    <DownloadIcon />
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </article>
   );
 }
@@ -160,15 +158,10 @@ export const results = new Elysia()
         .all(params.jobId);
 
       return (
-        <BaseHtml webroot={WEBROOT} title="ConvertX | Result">
+        <BaseHtml webroot={WEBROOT} title="Convertor King | Result">
           <>
             <Header webroot={WEBROOT} allowUnauthenticated={ALLOW_UNAUTHENTICATED} loggedIn />
-            <main
-              class={`
-                w-full flex-1 px-2
-                sm:px-4
-              `}
-            >
+            <main class="w-full flex-1 px-4 py-8">
               <ResultsArticle job={job} files={files} outputPath={outputPath} />
             </main>
             <script src={`${WEBROOT}/results.js`} defer />

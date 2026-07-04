@@ -30,5 +30,5 @@
     // "noImplicitReturns": true
   },
   "include": ["src", "package.json"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "mobile"]
 }

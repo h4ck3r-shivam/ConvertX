@@ -9,27 +9,30 @@ export const chooseConverter = new Elysia().use(userService).post(
       <>
         <article
           class={`
-            convert_to_popup absolute z-2 m-0 hidden h-[50vh] max-h-[50vh] w-full flex-col
-            overflow-x-hidden overflow-y-auto rounded-sm bg-neutral-800
+            convert_to_popup absolute z-20 m-0 hidden h-[50vh] max-h-[50vh] w-full flex-col
+            overflow-x-hidden overflow-y-auto rounded-lg border border-(--border-default)
+            bg-(--surface-raised)
             sm:h-[30vh]
           `}
         >
           {Object.entries(getPossibleTargets(body.fileType)).map(([converter, targets]) => (
             <article
-              class={`convert_to_group flex w-full flex-col border-b border-neutral-700 p-4`}
+              class={`convert_to_group flex w-full flex-col border-b border-(--border-subtle) p-4`}
               data-converter={converter}
             >
-              <header class="mb-2 w-full text-xl font-bold" safe>
+              <header
+                class="mb-2 w-full text-sm font-bold tracking-wide text-accent-500 uppercase"
+                safe
+              >
                 {converter}
               </header>
               <ul class="convert_to_target flex flex-row flex-wrap gap-1">
                 {targets.map((target) => (
                   <button
-                    // https://stackoverflow.com/questions/121499/when-a-blur-event-occurs-how-can-i-find-out-which-element-focus-went-to#comment82388679_33325953
                     tabindex={0}
                     class={`
-                      target rounded-sm bg-neutral-700 p-1 text-base
-                      hover:bg-neutral-600
+                      target rounded-md bg-(--surface-overlay) px-3 py-1.5 text-sm transition-all
+                      hover:bg-accent-500 hover:text-contrast
                     `}
                     data-value={`${target},${converter}`}
                     data-target={target}

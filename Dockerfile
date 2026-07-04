@@ -1,5 +1,6 @@
 FROM debian:testing-slim AS base
 LABEL org.opencontainers.image.source="https://github.com/C4illin/ConvertX"
+LABEL org.opencontainers.image.title="Convertor King"
 WORKDIR /app
 
 # install bun

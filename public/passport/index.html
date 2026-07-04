@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="webroot" content="" />
+    <title>Passport Photo | Convertor King</title>
+    <link rel="stylesheet" href="../generated.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+  </head>
+  <body>
+    <div class="container">
+      <a href="../" class="back-link">← Back to Convertor King</a>
+      <h1>Passport Photo Generator</h1>
+
+      <div class="app-header">
+        <div class="header-badges">
+          <span class="badge badge-primary">🔒 100% Offline</span>
+          <span class="badge badge-success">✨ Free Forever</span>
+          <span class="badge badge-info">🚀 No Sign-up Required</span>
+          <span class="badge badge-secure">🛡️ Privacy First</span>
+          <span class="badge badge-fast">⚡ Instant Processing</span>
+        </div>
+        <p class="header-description">
+          Create professional passport photos instantly • Works entirely in your browser • No data
+          uploaded to servers
+        </p>
+      </div>
+
+      <div class="editor-nav">
+        <a href="editor.html" class="nav-link">✨ Advanced Editor →</a>
+      </div>
+
+      <div class="upload-section">
+        <label for="photoUpload" class="upload-label">Upload Photo:</label>
+        <input type="file" id="photoUpload" accept="image/*" />
+
+        <label for="photoSize">Photo Size:</label>
+        <select id="photoSize">
+          <option value="35x45">India/UK (35×45 mm)</option>
+          <option value="51x51">USA (51×51 mm)</option>
+          <option value="50x70">Canada (50×70 mm)</option>
+          <option value="custom">Custom Size</option>
+        </select>
+
+        <div id="customSizeInputs" style="display: none">
+          <label for="customWidth">Width (mm):</label>
+          <input type="number" id="customWidth" min="10" max="100" value="35" />
+
+          <label for="customHeight">Height (mm):</label>
+          <input type="number" id="customHeight" min="10" max="150" value="45" />
+        </div>
+      </div>
+
+      <div class="preview-section">
+        <h3>Preview:</h3>
+        <canvas id="photoCanvas"></canvas>
+        <div class="action-buttons">
+          <button id="printBtn" class="print-btn" style="display: none">
+            <span class="print-icon">🖨️</span> Print Photos
+          </button>
+          <button id="generatePdf" style="display: none">📄 Generate PDF</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="app-footer">
+      <div class="footer-content">
+        <div class="footer-item">
+          <span>🔒 Works Offline • No Data Saved</span>
+        </div>
+        <div class="footer-item">
+          <span>Powered by Convertor King</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

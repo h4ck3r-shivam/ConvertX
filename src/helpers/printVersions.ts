@@ -2,7 +2,7 @@ import { exec } from "node:child_process";
 import { readFile } from "node:fs";
 import { version } from "../../package.json";
 
-console.log(`ConvertX v${version}`);
+console.log(`Convertor King v${version}`);
 
 if (process.env.NODE_ENV === "production") {
   readFile("/etc/os-release", "utf8", (error, stdout) => {

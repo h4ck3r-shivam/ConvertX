@@ -1,7 +1,12 @@
 {
-  "name": "ConvertX | Self Hosted File Converter",
-  "short_name": "ConvertX",
+  "name": "Convertor King | Self Hosted File Converter",
+  "short_name": "Convertor King",
   "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
@@ -10,10 +15,11 @@
     {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "theme_color": "#a5d601",
-  "background_color": "#13171f",
+  "theme_color": "#8b5cf6",
+  "background_color": "#0f0f1e",
   "display": "standalone"
 }

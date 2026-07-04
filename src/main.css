@@ -5,6 +5,7 @@
 
 @theme {
   --color-contrast: var(--contrast);
+  --color-neutral-950: var(--neutral-950);
   --color-neutral-900: var(--neutral-900);
   --color-neutral-800: var(--neutral-800);
   --color-neutral-700: var(--neutral-700);
@@ -14,19 +15,164 @@
   --color-neutral-300: var(--neutral-300);
   --color-neutral-200: var(--neutral-200);
   --color-neutral-100: var(--neutral-100);
+  --color-neutral-50: var(--neutral-50);
   --color-accent-600: var(--accent-600);
   --color-accent-500: var(--accent-500);
   --color-accent-400: var(--accent-400);
+
+  --font-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
 }
 
+/* ===== Component Utilities ===== */
+
 @utility article {
-  @apply px-2 sm:px-4 py-4 mb-4 bg-neutral-800/40 w-full mx-auto max-w-4xl rounded-sm;
+  @apply px-4 sm:px-6 py-6 mb-4 w-full mx-auto max-w-4xl rounded-lg;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-md);
 }
 
 @utility btn-primary {
-  @apply bg-accent-500 text-contrast rounded-sm p-2 sm:p-4 hover:bg-accent-400 cursor-pointer transition-colors;
+  @apply rounded-md px-4 py-2.5 font-medium cursor-pointer transition-all;
+  background: var(--accent-500);
+  color: var(--contrast);
+  border: none;
+}
+@utility btn-primary {
+  &:hover {
+    background: var(--accent-400);
+    box-shadow: var(--shadow-glow);
+  }
 }
 
 @utility btn-secondary {
-  @apply bg-neutral-400 text-contrast rounded-sm p-2 sm:p-4 hover:bg-neutral-300 cursor-pointer transition-colors;
+  @apply rounded-md px-4 py-2.5 font-medium cursor-pointer transition-all;
+  background: var(--neutral-600);
+  color: var(--contrast);
+  border: 1px solid var(--border-default);
+}
+@utility btn-secondary {
+  &:hover {
+    background: var(--neutral-500);
+  }
+}
+
+@utility btn-ghost {
+  @apply rounded-md px-4 py-2.5 font-medium cursor-pointer transition-all;
+  background: transparent;
+  color: var(--neutral-300);
+  border: 1px solid var(--border-subtle);
+}
+@utility btn-ghost {
+  &:hover {
+    background: var(--surface-overlay);
+    color: var(--neutral-200);
+  }
+}
+
+@utility input {
+  @apply rounded-md px-4 py-2.5 w-full transition-all;
+  background: var(--surface-base);
+  border: 1px solid var(--border-default);
+  color: var(--neutral-200);
+}
+@utility input {
+  &:focus {
+    outline: none;
+    border-color: var(--accent-500);
+    box-shadow: 0 0 0 3px oklch(65% 0.25 295 / 0.15);
+  }
+}
+
+@utility card {
+  @apply rounded-lg p-5;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+}
+
+@utility badge {
+  @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium;
+  background: var(--surface-overlay);
+  color: var(--neutral-300);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ===== Animated Loader ===== */
+
+.ck-loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ck-loader-ring {
+  transform-origin: 32px 32px;
+  animation: ck-spin 1.2s linear infinite;
+}
+
+.ck-loader-crown {
+  transform-origin: 0 0;
+  animation: ck-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes ck-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ck-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+}
+
+/* ===== Page Transition Loader ===== */
+
+.ck-page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent-600), var(--accent-400));
+  z-index: 9999;
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 8px oklch(65% 0.25 295 / 0.4);
+  transition: width 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.ck-page-loader.ck-active {
+  opacity: 1;
+  animation: ck-page-load 1.5s ease-out forwards;
+}
+
+@keyframes ck-page-load {
+  0% {
+    width: 0;
+  }
+  30% {
+    width: 40%;
+  }
+  60% {
+    width: 70%;
+  }
+  90% {
+    width: 95%;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
 }

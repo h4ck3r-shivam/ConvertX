@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Convertor King",
+    "slug": "convertor-king",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "convertorking",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f0f1e"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.convertorking.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Convertor King needs camera access to capture photos for conversion.",
+        "NSPhotoLibraryUsageDescription": "Convertor King needs photo library access to select files for conversion.",
+        "NSPhotoLibraryAddUsageDescription": "Convertor King saves converted files to your photo library.",
+        "UIBackgroundModes": ["fetch", "remote-notification"]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0f0f1e"
+      },
+      "package": "com.convertorking.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-notifications",
+      "expo-secure-store",
+      "expo-local-authentication"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

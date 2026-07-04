@@ -1,7 +1,7 @@
 # This compose file is for development and testing purposes only. See README for production deployment instructions.
 
 services:
-  convertx:
+  convertor-king:
     build:
       context: .
       # dockerfile: Debian.Dockerfile

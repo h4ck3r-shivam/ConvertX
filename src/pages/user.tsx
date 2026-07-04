@@ -43,13 +43,13 @@ export const userService = new Elysia({ name: "user/service" })
   .macro("auth", {
     cookie: "session",
     async resolve({ status, jwt, cookie: { auth } }) {
-      if (!auth.value) {
+      if (!auth?.value) {
         return status(401, {
           success: false,
           message: "Unauthorized",
         });
       }
-      const user = await jwt.verify(auth.value);
+      const user = await jwt.verify(auth.value as string);
       if (!user) {
         return status(401, {
           success: false,
@@ -71,57 +71,57 @@ export const user = new Elysia()
     }
 
     return (
-      <BaseHtml title="ConvertX | Setup" webroot={WEBROOT}>
-        <main
-          class={`
-            mx-auto w-full max-w-4xl flex-1 px-2
-            sm:px-4
-          `}
-        >
-          <h1 class="my-8 text-3xl">Welcome to ConvertX!</h1>
-          <article class="article p-0">
-            <header class="w-full bg-neutral-800 p-4">Create your account</header>
-            <form method="post" action={`${WEBROOT}/register`} class="p-4">
-              <fieldset class="mb-4 flex flex-col gap-4">
-                <label class="flex flex-col gap-1">
-                  Email
+      <BaseHtml title="Convertor King | Setup" webroot={WEBROOT}>
+        <main class="flex w-full flex-1 items-center justify-center px-4 py-8">
+          <div class="w-full max-w-md">
+            <div class="mb-6 text-center">
+              <h1 class="mb-2 text-3xl font-bold text-neutral-100">Welcome to Convertor King!</h1>
+              <p class="text-neutral-400">Create your admin account to get started</p>
+            </div>
+            <div class="card">
+              <form method="post" action={`${WEBROOT}/register`} class="flex flex-col gap-4">
+                <label class="flex flex-col gap-1.5">
+                  <span class="text-sm font-medium text-neutral-300">Email</span>
                   <input
                     type="email"
                     name="email"
-                    class="rounded-sm bg-neutral-800 p-3"
-                    placeholder="Email"
+                    class="input"
+                    placeholder="you@example.com"
                     autocomplete="email"
                     required
                   />
                 </label>
-                <label class="flex flex-col gap-1">
-                  Password
+                <label class="flex flex-col gap-1.5">
+                  <span class="text-sm font-medium text-neutral-300">Password</span>
                   <input
                     type="password"
                     name="password"
-                    class="rounded-sm bg-neutral-800 p-3"
-                    placeholder="Password"
+                    class="input"
+                    placeholder="••••••••"
                     autocomplete="current-password"
                     required
                   />
                 </label>
-              </fieldset>
-              <input type="submit" value="Create account" class="btn-primary" />
-            </form>
-            <footer class="p-4">
-              Report any issues on{" "}
-              <a
-                class={`
-                  text-accent-500 underline
-                  hover:text-accent-400
-                `}
-                href="https://github.com/C4illin/ConvertX"
+                <input type="submit" value="Create account" class="mt-2 btn-primary" />
+              </form>
+              <div
+                class="
+                  mt-4 border-t border-(--border-subtle) pt-4 text-center text-sm text-neutral-500
+                "
               >
-                GitHub
-              </a>
-              .
-            </footer>
-          </article>
+                Report issues on{" "}
+                <a
+                  class="
+                    text-accent-500 transition-colors
+                    hover:text-accent-400
+                  "
+                  href="https://github.com/C4illin/ConvertX"
+                >
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
         </main>
       </BaseHtml>
     );
@@ -132,7 +132,7 @@ export const user = new Elysia()
     }
 
     return (
-      <BaseHtml webroot={WEBROOT} title="ConvertX | Register">
+      <BaseHtml webroot={WEBROOT} title="Convertor King | Register">
         <>
           <Header
             webroot={WEBROOT}
@@ -140,41 +140,37 @@ export const user = new Elysia()
             allowUnauthenticated={ALLOW_UNAUTHENTICATED}
             hideHistory={HIDE_HISTORY}
           />
-          <main
-            class={`
-              w-full flex-1 px-2
-              sm:px-4
-            `}
-          >
-            <article class="article">
-              <form method="post" class="flex flex-col gap-4">
-                <fieldset class="mb-4 flex flex-col gap-4">
-                  <label class="flex flex-col gap-1">
-                    Email
+          <main class="flex w-full flex-1 items-center justify-center px-4 py-8">
+            <div class="w-full max-w-md">
+              <div class="card">
+                <h2 class="mb-4 text-xl font-bold text-neutral-100">Create an account</h2>
+                <form method="post" class="flex flex-col gap-4">
+                  <label class="flex flex-col gap-1.5">
+                    <span class="text-sm font-medium text-neutral-300">Email</span>
                     <input
                       type="email"
                       name="email"
-                      class="rounded-sm bg-neutral-800 p-3"
-                      placeholder="Email"
+                      class="input"
+                      placeholder="you@example.com"
                       autocomplete="email"
                       required
                     />
                   </label>
-                  <label class="flex flex-col gap-1">
-                    Password
+                  <label class="flex flex-col gap-1.5">
+                    <span class="text-sm font-medium text-neutral-300">Password</span>
                     <input
                       type="password"
                       name="password"
-                      class="rounded-sm bg-neutral-800 p-3"
-                      placeholder="Password"
+                      class="input"
+                      placeholder="••••••••"
                       autocomplete="current-password"
                       required
                     />
                   </label>
-                </fieldset>
-                <input type="submit" value="Register" class="w-full btn-primary" />
-              </form>
-            </article>
+                  <input type="submit" value="Register" class="mt-2 w-full btn-primary" />
+                </form>
+              </div>
+            </div>
           </main>
         </>
       </BaseHtml>
@@ -254,7 +250,7 @@ export const user = new Elysia()
       }
 
       return (
-        <BaseHtml webroot={WEBROOT} title="ConvertX | Login">
+        <BaseHtml webroot={WEBROOT} title="Convertor King | Login">
           <>
             <Header
               webroot={WEBROOT}
@@ -262,52 +258,48 @@ export const user = new Elysia()
               allowUnauthenticated={ALLOW_UNAUTHENTICATED}
               hideHistory={HIDE_HISTORY}
             />
-            <main
-              class={`
-                w-full flex-1 px-2
-                sm:px-4
-              `}
-            >
-              <article class="article">
-                <form method="post" class="flex flex-col gap-4">
-                  <fieldset class="mb-4 flex flex-col gap-4">
-                    <label class="flex flex-col gap-1">
-                      Email
+            <main class="flex w-full flex-1 items-center justify-center px-4 py-8">
+              <div class="w-full max-w-md">
+                <div class="card">
+                  <h2 class="mb-4 text-xl font-bold text-neutral-100">Welcome back</h2>
+                  <form method="post" class="flex flex-col gap-4">
+                    <label class="flex flex-col gap-1.5">
+                      <span class="text-sm font-medium text-neutral-300">Email</span>
                       <input
                         type="email"
                         name="email"
-                        class="rounded-sm bg-neutral-800 p-3"
-                        placeholder="Email"
+                        class="input"
+                        placeholder="you@example.com"
                         autocomplete="email"
                         required
                       />
                     </label>
-                    <label class="flex flex-col gap-1">
-                      Password
+                    <label class="flex flex-col gap-1.5">
+                      <span class="text-sm font-medium text-neutral-300">Password</span>
                       <input
                         type="password"
                         name="password"
-                        class="rounded-sm bg-neutral-800 p-3"
-                        placeholder="Password"
+                        class="input"
+                        placeholder="••••••••"
                         autocomplete="current-password"
                         required
                       />
                     </label>
-                  </fieldset>
-                  <div class="flex flex-row gap-4">
-                    {ACCOUNT_REGISTRATION ? (
-                      <a
-                        href={`${WEBROOT}/register`}
-                        role="button"
-                        class="w-full btn-secondary text-center"
-                      >
-                        Register
-                      </a>
-                    ) : null}
-                    <input type="submit" value="Login" class="w-full btn-primary" />
-                  </div>
-                </form>
-              </article>
+                    <div class="flex flex-row gap-3">
+                      {ACCOUNT_REGISTRATION ? (
+                        <a
+                          href={`${WEBROOT}/register`}
+                          role="button"
+                          class="btn-secondary text-center"
+                        >
+                          Register
+                        </a>
+                      ) : null}
+                      <input type="submit" value="Login" class="flex-1 btn-primary" />
+                    </div>
+                  </form>
+                </div>
+              </div>
             </main>
           </>
         </BaseHtml>
@@ -388,7 +380,7 @@ export const user = new Elysia()
       }
 
       return (
-        <BaseHtml webroot={WEBROOT} title="ConvertX | Account">
+        <BaseHtml webroot={WEBROOT} title="Convertor King | Account">
           <>
             <Header
               webroot={WEBROOT}
@@ -397,54 +389,52 @@ export const user = new Elysia()
               hideHistory={HIDE_HISTORY}
               loggedIn
             />
-            <main
-              class={`
-                w-full flex-1 px-2
-                sm:px-4
-              `}
-            >
-              <article class="article">
-                <form method="post" class="flex flex-col gap-4">
-                  <fieldset class="mb-4 flex flex-col gap-4">
-                    <label class="flex flex-col gap-1">
-                      Email
+            <main class="flex w-full flex-1 items-center justify-center px-4 py-8">
+              <div class="w-full max-w-md">
+                <div class="card">
+                  <h2 class="mb-4 text-xl font-bold text-neutral-100">Account Settings</h2>
+                  <form method="post" class="flex flex-col gap-4">
+                    <label class="flex flex-col gap-1.5">
+                      <span class="text-sm font-medium text-neutral-300">Email</span>
                       <input
                         type="email"
                         name="email"
-                        class="rounded-sm bg-neutral-800 p-3"
-                        placeholder="Email"
+                        class="input"
+                        placeholder="you@example.com"
                         autocomplete="email"
                         value={userData.email}
                         required
                       />
                     </label>
-                    <label class="flex flex-col gap-1">
-                      Password (leave blank for unchanged)
+                    <label class="flex flex-col gap-1.5">
+                      <span class="text-sm font-medium text-neutral-300">
+                        New Password (leave blank for unchanged)
+                      </span>
                       <input
                         type="password"
                         name="newPassword"
-                        class="rounded-sm bg-neutral-800 p-3"
-                        placeholder="Password"
+                        class="input"
+                        placeholder="••••••••"
                         autocomplete="new-password"
                       />
                     </label>
-                    <label class="flex flex-col gap-1">
-                      Current Password
+                    <label class="flex flex-col gap-1.5">
+                      <span class="text-sm font-medium text-neutral-300">Current Password</span>
                       <input
                         type="password"
                         name="password"
-                        class="rounded-sm bg-neutral-800 p-3"
-                        placeholder="Password"
+                        class="input"
+                        placeholder="••••••••"
                         autocomplete="current-password"
                         required
                       />
                     </label>
-                  </fieldset>
-                  <div role="group">
-                    <input type="submit" value="Update" class="w-full btn-primary" />
-                  </div>
-                </form>
-              </article>
+                    <div role="group">
+                      <input type="submit" value="Update" class="w-full btn-primary" />
+                    </div>
+                  </form>
+                </div>
+              </div>
             </main>
           </>
         </BaseHtml>

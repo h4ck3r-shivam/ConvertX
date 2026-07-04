@@ -1,7 +1,62 @@
-:root {
-  /* Light mode */
+/* Convertor King — Theme System
+   Dual theme: dark (default) + light, controlled via [data-theme] on <html>.
+   Violet accent palette with surface, border, shadow, and radius tokens.
+*/
+
+/* ===== Dark Theme (default) ===== */
+:root,
+[data-theme="dark"] {
+  --contrast: oklch(0% 0 0);
+
+  /* Neutral colors — inverted for dark mode */
+  --neutral-950: oklch(13% 0.028 261.692);
+  --neutral-900: oklch(17% 0.029 264.665);
+  --neutral-800: oklch(22% 0.03 256.848);
+  --neutral-700: oklch(30% 0.032 259.733);
+  --neutral-600: oklch(40% 0.03 256.802);
+  --neutral-500: oklch(55.1% 0.027 264.364);
+  --neutral-400: oklch(65% 0.022 261.325);
+  --neutral-300: oklch(80% 0.01 258.338);
+  --neutral-200: oklch(90% 0.006 264.531);
+  --neutral-100: oklch(95% 0.003 264.542);
+  --neutral-50: oklch(98.5% 0.002 247.839);
+
+  /* Accent — Violet */
+  --accent-600: oklch(58% 0.24 295);
+  --accent-500: oklch(65% 0.25 295);
+  --accent-400: oklch(72% 0.24 295);
+
+  /* Surface tokens */
+  --surface-base: oklch(15% 0.028 261.692);
+  --surface-raised: oklch(20% 0.029 264.665);
+  --surface-overlay: oklch(25% 0.03 256.848);
+
+  /* Border tokens */
+  --border-subtle: oklch(30% 0.03 259.733 / 0.5);
+  --border-default: oklch(35% 0.03 259.733);
+  --border-strong: oklch(45% 0.03 256.802);
+
+  /* Shadow tokens */
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.3);
+  --shadow-md: 0 4px 12px oklch(0% 0 0 / 0.35);
+  --shadow-lg: 0 10px 40px oklch(0% 0 0 / 0.4);
+  --shadow-glow: 0 0 20px oklch(65% 0.25 295 / 0.15);
+
+  /* Radius tokens */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Misc */
+  --backdrop-blur: blur(12px);
+}
+
+/* ===== Light Theme ===== */
+[data-theme="light"] {
   --contrast: oklch(100% 0 0);
-  /* Neutral colors - Gray */
+
+  /* Neutral colors — normal order for light mode */
   --neutral-950: oklch(98.5% 0.002 247.839);
   --neutral-900: oklch(96.7% 0.003 264.542);
   --neutral-800: oklch(92.8% 0.006 264.531);
@@ -13,35 +68,34 @@
   --neutral-200: oklch(26.9% 0 0);
   --neutral-100: oklch(21% 0.034 264.665);
   --neutral-50: oklch(13% 0.028 261.692);
-  /* lime-700 */
-  --accent-600: oklch(53.2% 0.157 131.589);
-  /* lime-600 */
-  --accent-500: oklch(64.8% 0.2 131.684);
-  /* lime-500 */
-  --accent-400: oklch(76.8% 0.233 130.85);
-}
 
-@media (prefers-color-scheme: dark) {
-  /* Dark mode */
-  :root {
-    --contrast: oklch(0% 0 0);
-    /* Neutral colors - Gray */
-    --neutral-950: oklch(13% 0.028 261.692);
-    --neutral-900: oklch(21% 0.034 264.665);
-    --neutral-800: oklch(27.8% 0.033 256.848);
-    --neutral-700: oklch(37.3% 0.034 259.733);
-    --neutral-600: oklch(44.6% 0.03 256.802);
-    --neutral-500: oklch(55.1% 0.027 264.364);
-    --neutral-400: oklch(70.7% 0.022 261.325);
-    --neutral-300: oklch(87.2% 0.01 258.338);
-    --neutral-200: oklch(92.8% 0.006 264.531);
-    --neutral-100: oklch(96.7% 0.003 264.542);
-    --neutral-50: oklch(98.5% 0.002 247.839);
-    /* lime-600 */
-    --accent-600: oklch(64.8% 0.2 131.684);
-    /* lime-500 */
-    --accent-500: oklch(76.8% 0.233 130.85);
-    /* lime-400 */
-    --accent-400: oklch(84.1% 0.238 128.85);
-  }
+  /* Accent — Violet (slightly darker for light mode contrast) */
+  --accent-600: oklch(50% 0.24 295);
+  --accent-500: oklch(58% 0.25 295);
+  --accent-400: oklch(65% 0.24 295);
+
+  /* Surface tokens */
+  --surface-base: oklch(97% 0.003 264.542);
+  --surface-raised: oklch(99% 0.002 247.839);
+  --surface-overlay: oklch(100% 0 0);
+
+  /* Border tokens */
+  --border-subtle: oklch(90% 0.006 264.531 / 0.5);
+  --border-default: oklch(88% 0.01 258.338);
+  --border-strong: oklch(75% 0.022 261.325);
+
+  /* Shadow tokens */
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.08);
+  --shadow-md: 0 4px 12px oklch(0% 0 0 / 0.1);
+  --shadow-lg: 0 10px 40px oklch(0% 0 0 / 0.12);
+  --shadow-glow: 0 0 20px oklch(58% 0.25 295 / 0.1);
+
+  /* Radius tokens (same as dark) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Misc */
+  --backdrop-blur: blur(12px);
 }

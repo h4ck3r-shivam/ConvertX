@@ -114,127 +114,135 @@ export const root = new Elysia().use(userService).get(
             hideHistory={HIDE_HISTORY}
             loggedIn
           />
-          <main
-            class={`
-              w-full flex-1 px-2
-              sm:px-4
-            `}
-          >
-            <article class="article">
-              <h1 class="mb-4 text-xl">Convert</h1>
-              <div class="mb-4 scrollbar-thin max-h-[50vh] overflow-y-auto">
+          <main class="w-full flex-1 px-4 py-8">
+            <div class="mx-auto max-w-4xl">
+              <div class="mb-8 text-center">
+                <h1 class="mb-2 text-3xl font-bold text-neutral-100">Convert Files</h1>
+                <p class="text-neutral-400">Upload your files and convert them to any format</p>
+              </div>
+
+              <div class="mb-6 card">
+                <div
+                  id="dropzone"
+                  class={`
+                    relative flex h-48 w-full items-center justify-center rounded-lg border-2
+                    border-dashed border-(--border-strong) transition-all
+                    hover:border-accent-500
+                    [&.dragover]:border-4 [&.dragover]:border-accent-500
+                  `}
+                >
+                  <div class="text-center">
+                    <div class="mb-2 text-4xl">📁</div>
+                    <p class="text-neutral-300">
+                      <b class="text-accent-500">Choose a file</b> or drag it here
+                    </p>
+                  </div>
+                  <input
+                    type="file"
+                    name="file"
+                    multiple
+                    class="absolute inset-0 size-full cursor-pointer opacity-0"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-6 scrollbar-thin max-h-[40vh] overflow-y-auto card">
                 <table
                   id="file-list"
                   class={`
-                    w-full table-auto rounded-sm bg-neutral-900
-                    [&_td]:p-4
+                    w-full table-auto
+                    [&_td]:p-3
                     [&_td]:first:max-w-[30vw] [&_td]:first:truncate
-                    [&_tr]:rounded-sm [&_tr]:border-b [&_tr]:border-neutral-800
+                    [&_tr]:border-b [&_tr]:border-(--border-subtle)
                   `}
                 />
               </div>
-              <div
-                id="dropzone"
-                class={`
-                  relative flex h-48 w-full items-center justify-center rounded-sm border
-                  border-dashed border-neutral-700 transition-all
-                  hover:border-neutral-600
-                  [&.dragover]:border-4 [&.dragover]:border-neutral-500
-                `}
-              >
-                <span>
-                  <b>Choose a file</b> or drag it here
-                </span>
-                <input
-                  type="file"
-                  name="file"
-                  multiple
-                  class="absolute inset-0 size-full cursor-pointer opacity-0"
-                />
-              </div>
-            </article>
-            <form
-              method="post"
-              action={`${WEBROOT}/convert`}
-              class="relative mx-auto mb-[35vh] w-full max-w-4xl"
-            >
-              <input type="hidden" name="file_names" id="file_names" />
-              <article class="article w-full">
-                <input
-                  type="search"
-                  name="convert_to_search"
-                  placeholder="Search for conversions"
-                  autocomplete="off"
-                  class="w-full rounded-sm bg-neutral-800 p-4"
-                />
-                <div class="select_container relative">
-                  <article
-                    class={`
-                      convert_to_popup absolute z-2 m-0 hidden h-[30vh] max-h-[50vh] w-full flex-col
-                      overflow-x-hidden overflow-y-auto rounded-sm bg-neutral-800
-                      sm:h-[30vh]
-                    `}
-                  >
-                    {Object.entries(getAllTargets()).map(([converter, targets]) => (
-                      <article
-                        class={`
-                          convert_to_group flex w-full flex-col border-b border-neutral-700 p-4
-                        `}
-                        data-converter={converter}
-                      >
-                        <header class="mb-2 w-full text-xl font-bold" safe>
-                          {converter}
-                        </header>
-                        <ul class={`convert_to_target flex flex-row flex-wrap gap-1`}>
-                          {targets.map((target) => (
-                            <button
-                              // https://stackoverflow.com/questions/121499/when-a-blur-event-occurs-how-can-i-find-out-which-element-focus-went-to#comment82388679_33325953
-                              tabindex={0}
-                              class={`
-                                target rounded-sm bg-neutral-700 p-1 text-base
-                                hover:bg-neutral-600
-                              `}
-                              data-value={`${target},${converter}`}
-                              data-target={target}
-                              data-converter={converter}
-                              type="button"
-                              safe
-                            >
-                              {target}
-                            </button>
-                          ))}
-                        </ul>
-                      </article>
-                    ))}
-                  </article>
 
-                  {/* Hidden element which determines the format to convert the file too and the converter to use */}
-                  <select name="convert_to" aria-label="Convert to" required hidden>
-                    <option selected disabled value="">
-                      Convert to
-                    </option>
-                    {Object.entries(getAllTargets()).map(([converter, targets]) => (
-                      <optgroup label={converter}>
-                        {targets.map((target) => (
-                          <option value={`${target},${converter}`} safe>
-                            {target}
-                          </option>
-                        ))}
-                      </optgroup>
-                    ))}
-                  </select>
+              <form method="post" action={`${WEBROOT}/convert`} class="relative mb-20">
+                <input type="hidden" name="file_names" id="file_names" />
+                <div class="mb-4 card">
+                  <input
+                    type="search"
+                    name="convert_to_search"
+                    placeholder="Search for conversions..."
+                    autocomplete="off"
+                    class="mb-3 input"
+                  />
+                  <div class="select_container relative">
+                    <article
+                      class={`
+                        convert_to_popup absolute z-20 m-0 hidden h-[30vh] max-h-[50vh] w-full
+                        flex-col overflow-x-hidden overflow-y-auto rounded-lg border
+                        border-(--border-default) bg-(--surface-raised)
+                        sm:h-[30vh]
+                      `}
+                    >
+                      {Object.entries(getAllTargets()).map(([converter, targets]) => (
+                        <article
+                          class={`
+                            convert_to_group flex w-full flex-col border-b border-(--border-subtle)
+                            p-4
+                          `}
+                          data-converter={converter}
+                        >
+                          <header
+                            class="
+                              mb-2 w-full text-sm font-bold tracking-wide text-accent-500 uppercase
+                            "
+                            safe
+                          >
+                            {converter}
+                          </header>
+                          <ul class={`convert_to_target flex flex-row flex-wrap gap-1`}>
+                            {targets.map((target) => (
+                              <button
+                                tabindex={0}
+                                class={`
+                                  target rounded-md bg-(--surface-overlay) px-3 py-1.5 text-sm
+                                  transition-all
+                                  hover:bg-accent-500 hover:text-contrast
+                                `}
+                                data-value={`${target},${converter}`}
+                                data-target={target}
+                                data-converter={converter}
+                                type="button"
+                                safe
+                              >
+                                {target}
+                              </button>
+                            ))}
+                          </ul>
+                        </article>
+                      ))}
+                    </article>
+
+                    <select name="convert_to" aria-label="Convert to" required hidden>
+                      <option selected disabled value="">
+                        Convert to
+                      </option>
+                      {Object.entries(getAllTargets()).map(([converter, targets]) => (
+                        <optgroup label={converter}>
+                          {targets.map((target) => (
+                            <option value={`${target},${converter}`} safe>
+                              {target}
+                            </option>
+                          ))}
+                        </optgroup>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-              </article>
-              <input
-                class={`
-                  w-full btn-primary opacity-100
-                  disabled:cursor-not-allowed disabled:opacity-50
-                `}
-                type="submit"
-                value="Convert"
-                disabled
-              />
-            </form>
+                <input
+                  class={`
+                    w-full btn-primary text-lg
+                    disabled:cursor-not-allowed disabled:opacity-40
+                  `}
+                  type="submit"
+                  value="Convert"
+                  disabled
+                />
+              </form>
+            </div>
           </main>
           <script src="script.js" defer />
         </>

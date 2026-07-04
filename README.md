@@ -1,6 +1,6 @@
-![ConvertX](images/logo.png)
+![Convertor King](images/logo.png)
 
-# ConvertX
+# Convertor King
 
 [![Docker](https://github.com/C4illin/ConvertX/actions/workflows/docker-publish.yml/badge.svg?branch=main)](https://github.com/C4illin/ConvertX/actions/workflows/docker-publish.yml)
 [![ghcr.io Pulls](https://img.shields.io/badge/dynamic/json?logo=github&url=https%3A%2F%2Fipitio.github.io%2Fbackage%2FC4illin%2FConvertX%2Fconvertx.json&query=%24.downloads&label=ghcr.io%20pulls&cacheSeconds=14400)](https://github.com/C4illin/ConvertX/pkgs/container/ConvertX)
@@ -60,9 +60,9 @@ Any missing converter? Open an issue or pull request!
 ```yml
 # docker-compose.yml
 services:
-  convertx:
+  convertor-king:
     image: ghcr.io/c4illin/convertx
-    container_name: convertx
+    container_name: convertor-king
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -133,7 +133,7 @@ Tutorial in polish: <https://www.kreatywnyprogramista.pl/convertx-lokalny-konwer
 
 ## Screenshots
 
-![ConvertX Preview](images/preview.png)
+![Convertor King Preview](images/preview.png)
 
 ## Development
 

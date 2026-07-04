@@ -1,3 +1,5 @@
+import { ThemeToggle } from "./themeToggle";
+
 export const Header = ({
   loggedIn,
   accountRegistration,
@@ -14,27 +16,43 @@ export const Header = ({
   let rightNav: JSX.Element;
   if (loggedIn) {
     rightNav = (
-      <ul class="flex gap-4">
+      <ul
+        class="
+          flex items-center gap-1
+          sm:gap-2
+        "
+      >
         {!hideHistory && (
           <li>
             <a
-              class={`
-                text-accent-600 transition-all
-                hover:text-accent-500 hover:underline
-              `}
+              class="
+                rounded-md px-3 py-1.5 text-sm text-neutral-400 transition-all
+                hover:bg-(--surface-overlay) hover:text-accent-500
+              "
               href={`${webroot}/history`}
             >
               History
             </a>
           </li>
         )}
+        <li>
+          <a
+            class="
+              rounded-md px-3 py-1.5 text-sm text-neutral-400 transition-all
+              hover:bg-(--surface-overlay) hover:text-accent-500
+            "
+            href={`${webroot}/passport/`}
+          >
+            Passport Photo
+          </a>
+        </li>
         {!allowUnauthenticated ? (
           <li>
             <a
-              class={`
-                text-accent-600 transition-all
-                hover:text-accent-500 hover:underline
-              `}
+              class="
+                rounded-md px-3 py-1.5 text-sm text-neutral-400 transition-all
+                hover:bg-(--surface-overlay) hover:text-accent-500
+              "
               href={`${webroot}/account`}
             >
               Account
@@ -44,27 +62,35 @@ export const Header = ({
         {!allowUnauthenticated ? (
           <li>
             <a
-              class={`
-                text-accent-600 transition-all
-                hover:text-accent-500 hover:underline
-              `}
+              class="
+                rounded-md px-3 py-1.5 text-sm text-neutral-400 transition-all
+                hover:bg-(--surface-overlay) hover:text-accent-500
+              "
               href={`${webroot}/logoff`}
             >
               Logout
             </a>
           </li>
         ) : null}
+        <li class="ml-1">
+          <ThemeToggle webroot={webroot} />
+        </li>
       </ul>
     );
   } else {
     rightNav = (
-      <ul class="flex gap-4">
+      <ul
+        class="
+          flex items-center gap-1
+          sm:gap-2
+        "
+      >
         <li>
           <a
-            class={`
-              text-accent-600 transition-all
-              hover:text-accent-500 hover:underline
-            `}
+            class="
+              rounded-md px-3 py-1.5 text-sm text-neutral-400 transition-all
+              hover:bg-(--surface-overlay) hover:text-accent-500
+            "
             href={`${webroot}/login`}
           >
             Login
@@ -73,28 +99,40 @@ export const Header = ({
         {accountRegistration ? (
           <li>
             <a
-              class={`
-                text-accent-600 transition-all
-                hover:text-accent-500 hover:underline
-              `}
+              class="
+                rounded-md px-3 py-1.5 text-sm text-neutral-400 transition-all
+                hover:bg-(--surface-overlay) hover:text-accent-500
+              "
               href={`${webroot}/register`}
             >
               Register
             </a>
           </li>
         ) : null}
+        <li class="ml-1">
+          <ThemeToggle webroot={webroot} />
+        </li>
       </ul>
     );
   }
 
   return (
-    <header class="w-full p-4">
-      <nav class={`mx-auto flex max-w-4xl justify-between rounded-sm bg-neutral-900 p-4`}>
+    <header
+      class="sticky top-0 z-50 w-full border-b border-(--border-subtle) backdrop-blur-md"
+      style="background: var(--surface-base);"
+    >
+      <nav class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
         <ul>
           <li>
-            <strong>
-              <a href={`${webroot}/`}>ConvertX</a>
-            </strong>
+            <a
+              href={`${webroot}/`}
+              class="
+                text-lg font-bold text-neutral-100 transition-colors
+                hover:text-accent-500
+              "
+            >
+              Convertor King
+            </a>
           </li>
         </ul>
         {rightNav}

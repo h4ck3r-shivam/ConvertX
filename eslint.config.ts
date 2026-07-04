@@ -6,7 +6,7 @@ import tseslint, { parser as eslintParserTypeScript } from "typescript-eslint";
 
 export default defineConfig(
   {
-    ignores: ["**/node_modules/**", "dist/**"],
+    ignores: ["**/node_modules/**", "dist/**", "passport-photo-generator/**", "mobile/**"],
   },
   js.configs.recommended,
   tseslint.configs.recommended,
@@ -50,6 +50,8 @@ export default defineConfig(
             "target",
             "convert_to_target",
             "job-details-toggle",
+            "theme-icon-dark",
+            "theme-icon-light",
           ],
         },
       ],
@@ -71,6 +73,7 @@ export default defineConfig(
     languageOptions: {
       globals: {
         ...globals.browser,
+        Cropper: "readonly",
       },
     },
   },

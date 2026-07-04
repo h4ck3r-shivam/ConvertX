@@ -5,7 +5,7 @@ import { Elysia } from "elysia";
 import "./helpers/printVersions";
 import db from "./db/db";
 import { Jobs } from "./db/types";
-import { AUTO_DELETE_EVERY_N_HOURS, WEBROOT } from "./helpers/env";
+import { AUTO_DELETE_EVERY_N_HOURS, ALLOW_UNAUTHENTICATED, WEBROOT } from "./helpers/env";
 import { chooseConverter } from "./pages/chooseConverter";
 import { convert } from "./pages/convert";
 import { deleteFile } from "./pages/deleteFile";
@@ -16,8 +16,10 @@ import { listConverters } from "./pages/listConverters";
 import { results } from "./pages/results";
 import { root } from "./pages/root";
 import { upload } from "./pages/upload";
-import { user } from "./pages/user";
+import { user, userService } from "./pages/user";
 import { healthcheck } from "./pages/healthcheck";
+import { theme } from "./pages/theme";
+import { api } from "./api";
 
 export const uploadsDir = "./data/uploads/";
 export const outputDir = "./data/output/";
@@ -32,6 +34,24 @@ const app = new Elysia({
   prefix: WEBROOT,
 })
   .use(html())
+  .use(userService)
+  .onBeforeHandle(
+    {
+      as: "global",
+    },
+    async ({ cookie: { auth }, jwt, redirect, path }) => {
+      if (ALLOW_UNAUTHENTICATED) return;
+
+      if (path.startsWith(`${WEBROOT}/passport`)) {
+        if (auth?.value) {
+          const user = await jwt.verify(auth.value as string);
+          if (user) return;
+        }
+
+        return redirect(`${WEBROOT}/login`, 302);
+      }
+    },
+  )
   .use(
     staticPlugin({
       assets: "public",
@@ -50,6 +70,8 @@ const app = new Elysia({
   .use(listConverters)
   .use(chooseConverter)
   .use(healthcheck)
+  .use(theme)
+  .use(api)
   .onError(({ error }) => {
     console.error(error);
   });

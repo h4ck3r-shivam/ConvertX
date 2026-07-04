@@ -19,4 +19,4 @@ Steps to reproduce the behavior:
 
 **Checklist:**
 
-- [ ] I am accessing ConvertX over HTTPS or have `HTTP_ALLOWED=true`
+- [ ] I am accessing Convertor King over HTTPS or have `HTTP_ALLOWED=true`
